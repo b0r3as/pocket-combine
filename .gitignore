@@ -117,6 +117,5 @@ plugins/**
 
 ### Project ###
 # This directory will be built from typescript
-www/**
 src/typings/tsd/**
 src/modules/config/registration-info.json
