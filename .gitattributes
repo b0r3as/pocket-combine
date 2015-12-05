@@ -1,0 +1,19 @@
+# raster graphics
+*.bmp binary -delta
+*.gif binary -delta
+*.giff binary -delta
+*.jpg binary -delta
+*.jpeg binary -delta
+*.png binary -delta
+*.tif binary -delta
+*.tiff binary -delta
+*.xcf binary -delta
+
+# vector graphics
+*.eps binary
+*.pdf binary
+*.ps binary
+*.svg binary
+*.swf binary
+*.wmf binary
+

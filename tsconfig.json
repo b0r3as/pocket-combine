@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "sourceMap": false,
+        "module": "commonjs",
+        "noImplicitAny": true
+    },
+    "files": [
+        "./src/app/app.ts",
+        "./src/app/app.d.ts"
+    ],
+    "compileOnSave": false,
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}
