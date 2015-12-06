@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(grunt) {
     var webpack = require("webpack");
     var webpackConfig = require('./webpack.config.js');
@@ -24,6 +26,25 @@ module.exports = function(grunt) {
                         dest: './www/index.html'
                     }
                 ]
+            },
+            config: {
+                src: './src/modules/config/registration-info.json.template',
+                dest: './src/modules/config/registration-info.json',
+                // Copy if file does not exist.
+                filter: function (aFilePath) {
+                    var dest = grunt.config('copy.config.dest');
+                    var exists = grunt.file.exists(path.resolve(dest));
+
+                    if (exists) {
+                        grunt.log.writeln('Config file "'['green'] + dest + '" already exists.'['green']);
+                    } else {
+                        grunt.log.writeln('Config file "'['green'] + dest + '" has been created.'['green']);
+                    }
+
+                    grunt.log.writeln('Enter your app credentials into the file before build.'['green']);
+
+                    return !exists;
+                }
             }
         },
         webpack: {
@@ -91,4 +112,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', ['clean:prebuild', 'webpack:build', 'less:build', 'copy:build']);
     grunt.registerTask('build-dev', ['clean:prebuild', 'webpack:build-dev', 'less:build-dev', 'copy:build']);
+    grunt.registerTask('config', ['copy:config']);
 };
