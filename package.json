@@ -1,13 +1,13 @@
 {
   "name": "pocket-combine",
   "version": "0.1.0",
-  "description": "",
+  "description": "Pocket Combine is a small Android app using the SWCombine.com Web Service.",
   "author": "b0r3as <timhaase@gmx.net>",
   "private": true,
   "license": "WTFPL",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boreas/pocket-combine"
+    "url": "git+ssh://git@github.com:b0r3as/pocket-combine.git"
   },
   "dependencies": {},
   "devDependencies": {

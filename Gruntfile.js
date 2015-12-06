@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = function(grunt) {
-    var webpack = require("webpack");
+    var webpack = require('webpack');
     var webpackConfig = require('./webpack.config.js');
 
     // Project configuration.
@@ -68,9 +68,9 @@ module.exports = function(grunt) {
         less: {
             build: {
                 options: {
-                    paths: ["./src"],
+                    paths: ['./src'],
                     plugins: [
-                        new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]}),
+                        new (require('less-plugin-autoprefix'))({browsers: ['last 2 versions']}),
                         new (require('less-plugin-clean-css'))()
                     ],
                     modifyVars: {
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
             },
             'build-dev': {
                 options: {
-                    paths: ["./src"],
+                    paths: ['./src'],
                     sourceMap: true
                 },
                 files: [
