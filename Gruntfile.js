@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('./package.json'),
         clean: {
             prebuild: {
-                src: ['./www/**/*']
+                src: ['./www/**/*', '!./www/.gitignore']
             }
         },
         copy: {
