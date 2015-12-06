@@ -1,7 +1,7 @@
 import {Test} from './main/main';
-import {can} from 'libs';
-import {cordova} from 'libs';
-import {$} from 'libs';
+import * as can from 'canjs';
+import * as cordova from 'cordova';
+import * as $ from 'jquery';
 import config from 'config';
 
 module PocketCombineApp {

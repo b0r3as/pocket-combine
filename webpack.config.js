@@ -21,11 +21,9 @@ module.exports = {
         // alias: {
         //     jquery: 'jquery-es6'
         // },
-        root: [
-            path.resolve('./src/app'),
-            path.resolve('./src/libs')
-        ].concat(getSubDirectories('./src/libs'))
-        .concat(getSubDirectories('./src/modules')),
+        root: [path.resolve('./src/app')]
+            .concat(getSubDirectories('./src/libs'))
+            .concat(getSubDirectories('./src/modules')),
         extensions: ['', '.js', '.ts', '.stache', '.json']
     },
     resolveLoader: {
