@@ -1,4 +1,4 @@
-/// <reference path="./canjs/canjs.d.ts" />
+/// <reference path='./canjs/canjs.d.ts' />
 
 declare module 'libs' {
     export var can: CanJS;

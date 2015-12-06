@@ -5,7 +5,7 @@ import {$} from 'libs';
 import config from 'config';
 
 module PocketCombineApp {
-    "use strict";
+    'use strict';
 
     export module Application {
         export function initialize(): void {

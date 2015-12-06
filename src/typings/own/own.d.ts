@@ -1,1 +1,1 @@
-/// <reference path="canjs/canjs.d.ts" />
+/// <reference path='canjs/canjs.d.ts' />
