@@ -1,5 +1,5 @@
 declare var components: any;
 
 declare module 'components' {
-    export = components;
+    export default components;
 }
