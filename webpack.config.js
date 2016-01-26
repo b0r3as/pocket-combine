@@ -18,9 +18,6 @@ module.exports = {
         filename: 'app.js',
     },
     resolve: {
-        // alias: {
-        //     jquery: 'jquery-es6'
-        // },
         root: [path.resolve('./src/app')]
             .concat(getSubDirectories('./src/libs'))
             .concat(getSubDirectories('./src/modules')),

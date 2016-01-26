@@ -3,6 +3,7 @@
         "target": "es6",
         "sourceMap": false,
         "module": "commonjs",
+        "allowSyntheticDefaultImports": true,
         "noImplicitAny": true
     },
     "files": [
