@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#compute/proto_compute*/
+/*can@2.3.11#compute/proto_compute*/
 define([
     'can/util/library',
     'can/util/bind',
@@ -211,7 +211,8 @@ define([
         }
     });
     var updateOnChange = function (compute, newValue, oldValue, batchNum) {
-        if (newValue !== oldValue) {
+        var valueChanged = newValue !== oldValue && !(newValue !== newValue && oldValue !== oldValue);
+        if (valueChanged) {
             can.batch.trigger(compute, {
                 type: 'change',
                 batchNum: batchNum

@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#view/target/target*/
+/*can@2.3.11#view/target/target*/
 define([
     'can/util/library',
     'can/elements'
@@ -33,33 +33,33 @@ define([
             return clone.innerHTML === '<xyz></xyz>';
         }(), namespacesWork = typeof document !== 'undefined' && !!document.createElementNS, setAttribute = can.attr.setAttribute;
     var cloneNode = clonesWork ? function (el) {
-            return el.cloneNode(true);
-        } : function (node) {
-            var copy;
-            if (node.nodeType === 1) {
-                copy = document.createElement(node.nodeName);
-            } else if (node.nodeType === 3) {
-                copy = document.createTextNode(node.nodeValue);
-            } else if (node.nodeType === 8) {
-                copy = document.createComment(node.nodeValue);
-            } else if (node.nodeType === 11) {
-                copy = document.createDocumentFragment();
-            }
-            if (node.attributes) {
-                var attributes = can.makeArray(node.attributes);
-                can.each(attributes, function (node) {
-                    if (node && node.specified) {
-                        setAttribute(copy, node.nodeName, node.nodeValue);
-                    }
-                });
-            }
-            if (node.childNodes) {
-                can.each(node.childNodes, function (child) {
-                    copy.appendChild(cloneNode(child));
-                });
-            }
-            return copy;
-        };
+        return el.cloneNode(true);
+    } : function (node) {
+        var copy;
+        if (node.nodeType === 1) {
+            copy = document.createElement(node.nodeName);
+        } else if (node.nodeType === 3) {
+            copy = document.createTextNode(node.nodeValue);
+        } else if (node.nodeType === 8) {
+            copy = document.createComment(node.nodeValue);
+        } else if (node.nodeType === 11) {
+            copy = document.createDocumentFragment();
+        }
+        if (node.attributes) {
+            var attributes = can.makeArray(node.attributes);
+            can.each(attributes, function (node) {
+                if (node && node.specified) {
+                    setAttribute(copy, node.nodeName, node.nodeValue);
+                }
+            });
+        }
+        if (node.childNodes) {
+            can.each(node.childNodes, function (child) {
+                copy.appendChild(cloneNode(child));
+            });
+        }
+        return copy;
+    };
     function processNode(node, paths, location, document) {
         var callback, loc = location, nodeType = typeof node, el, p, i, len;
         var getCallback = function () {

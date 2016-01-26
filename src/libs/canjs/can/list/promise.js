@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#list/promise/promise*/
+/*can@2.3.11#list/promise/promise*/
 define([
     'can/util/can',
     'can/list'
@@ -15,21 +15,29 @@ define([
     can.List.prototype.replace = function (data) {
         var result = oldReplace.apply(this, arguments);
         if (can.isDeferred(data)) {
+            if (this._deferred) {
+                this._deferred.__cancelState = true;
+            }
             can.batch.start();
             this.attr('state', data.state());
             this.removeAttr('reason');
             can.batch.stop();
             var self = this;
             var deferred = this._deferred = new can.Deferred();
+            deferred.__cancelState = false;
             data.then(function () {
-                self.attr('state', data.state());
-                deferred.resolve(self);
+                if (!deferred.__cancelState) {
+                    self.attr('state', data.state());
+                    deferred.resolve(self);
+                }
             }, function (reason) {
-                can.batch.start();
-                self.attr('state', data.state());
-                self.attr('reason', reason);
-                can.batch.stop();
-                deferred.reject(reason);
+                if (!deferred.__cancelState) {
+                    can.batch.start();
+                    self.attr('state', data.state());
+                    self.attr('reason', reason);
+                    can.batch.stop();
+                    deferred.reject(reason);
+                }
             });
         }
         return result;

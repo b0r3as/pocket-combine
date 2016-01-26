@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#util/attr/attr*/
+/*can@2.3.11#util/attr/attr*/
 define(['can/util/can'], function (can) {
     var setImmediate = can.global.setImmediate || function (cb) {
             return setTimeout(cb, 0);
@@ -74,6 +74,18 @@ define(['can/util/can'], function (can) {
                 } else {
                     this.set(el, attrName, val);
                 }
+            },
+            setSelectValue: function (el, val) {
+                if (val != null) {
+                    var options = el.getElementsByTagName('option');
+                    for (var i = 0; i < options.length; i++) {
+                        if (val == options[i].value) {
+                            options[i].selected = true;
+                            return;
+                        }
+                    }
+                }
+                el.selectedIndex = -1;
             },
             set: function (el, attrName, val) {
                 var usingMutationObserver = can.isDOM(el) && attr.MutationObserver;

@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#view/stache/text_section*/
+/*can@2.3.11#view/stache/text_section*/
 define([
     'can/util/library',
     'can/view/live',
@@ -40,8 +40,8 @@ define([
             var renderer = this.stack[0].compile();
             return function (scope, options) {
                 var compute = can.compute(function () {
-                        return renderer(scope, options);
-                    }, null, false);
+                    return renderer(scope, options);
+                }, null, false);
                 compute.computeInstance.bind('change', can.k);
                 var value = compute();
                 if (compute.computeInstance.hasDependencies) {

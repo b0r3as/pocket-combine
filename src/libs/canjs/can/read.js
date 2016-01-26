@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#compute/read*/
+/*can@2.3.11#compute/read*/
 define(['can/util/library'], function (can) {
     var read = function (parent, reads, options) {
         options = options || {};
@@ -170,6 +170,7 @@ define(['can/util/library'], function (can) {
                     if (prop.key in value) {
                         return value[prop.key];
                     } else if (prop.at && specialRead[prop.key] && '@' + prop.key in value) {
+                        prop.at = false;
                         return value['@' + prop.key];
                     }
                 }
@@ -177,12 +178,12 @@ define(['can/util/library'], function (can) {
         }
     ];
     var specialRead = {
-            index: true,
-            key: true,
-            event: true,
-            element: true,
-            viewModel: true
-        };
+        index: true,
+        key: true,
+        event: true,
+        element: true,
+        viewModel: true
+    };
     read.write = function (parent, key, value, options) {
         options = options || {};
         if (can.isMapLike(parent)) {

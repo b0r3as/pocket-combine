@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#view/scope/scope*/
+/*can@2.3.11#view/scope/scope*/
 define([
     'can/util/library',
     'can/view/compute_data',
@@ -146,18 +146,31 @@ define([
             }
             return cur._context;
         },
+        set: function (key, value, options) {
+            var dotIndex = key.lastIndexOf('.'), slashIndex = key.lastIndexOf('/'), contextPath, propName;
+            if (slashIndex > dotIndex) {
+                contextPath = key.substring(0, slashIndex);
+                propName = key.substring(slashIndex + 1, key.length);
+            } else {
+                if (dotIndex !== -1) {
+                    contextPath = key.substring(0, dotIndex);
+                    propName = key.substring(dotIndex + 1, key.length);
+                } else {
+                    contextPath = '.';
+                    propName = key;
+                }
+            }
+            if (key.charAt(0) === '*') {
+                can.compute.set(this.getRefs()._context, key, value, options);
+            } else {
+                var context = this.read(contextPath, options).value;
+                can.compute.set(context, propName, value, options);
+            }
+        },
         attr: can.__notObserve(function (key, value, options) {
             options = can.simpleExtend({ isArgument: true }, options);
             if (arguments.length === 2) {
-                var lastIndex = key.lastIndexOf('.'), readKey = lastIndex !== -1 ? key.substring(0, lastIndex) : '.', obj = this.read(readKey, options).value;
-                if (lastIndex !== -1) {
-                    key = key.substring(lastIndex + 1, key.length);
-                }
-                if (key.charAt(0) === '*') {
-                    can.compute.set(this.getRefs()._context, key, value, options);
-                } else {
-                    can.compute.set(obj, key, value, options);
-                }
+                return this.set(key, value, options);
             } else {
                 return this.get(key, options);
             }
@@ -177,7 +190,7 @@ define([
                     parent = scope._parent;
                     break;
                 }
-                contexts.push(context);
+                contexts.unshift(context);
                 scope = scope._parent;
             }
             if (parent) {

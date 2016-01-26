@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#view/view*/
+/*can@2.3.11#view/view*/
 define(['can/util/library'], function (can) {
     var isFunction = can.isFunction, makeArray = can.makeArray, hookupId = 1;
     var makeRenderer = function (textRenderer) {
@@ -91,25 +91,18 @@ define(['can/util/library'], function (can) {
         return can.isArray(resolved) && resolved[1] === 'success' ? resolved[0] : resolved;
     };
     var $view = can.view = can.template = function (view, data, helpers, callback) {
-            if (isFunction(helpers)) {
-                callback = helpers;
-                helpers = undefined;
-            }
-            return $view.renderAs('fragment', view, data, helpers, callback);
-        };
+        if (isFunction(helpers)) {
+            callback = helpers;
+            helpers = undefined;
+        }
+        return $view.renderAs('fragment', view, data, helpers, callback);
+    };
     can.extend($view, {
         frag: function (result, parentNode) {
             return $view.hookup($view.fragment(result), parentNode);
         },
         fragment: function (result) {
-            if (typeof result !== 'string' && result.nodeType === 11) {
-                return result;
-            }
-            var frag = can.buildFragment(result, document.body);
-            if (!frag.childNodes.length) {
-                frag.appendChild(document.createTextNode(''));
-            }
-            return frag;
+            return can.frag(result, document);
         },
         toId: function (src) {
             return can.map(src.toString().split(/\/|\./g), function (part) {
@@ -191,8 +184,8 @@ define(['can/util/library'], function (can) {
         },
         preload: function (id, renderer) {
             var def = $view.cached[id] = new can.Deferred().resolve(function (data, helpers) {
-                    return renderer.call(data, data, helpers);
-                });
+                return renderer.call(data, data, helpers);
+            });
             def.__view_id = id;
             $view.cachedRenderers[id] = renderer;
             return renderer;

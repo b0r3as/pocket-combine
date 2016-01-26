@@ -1,12 +1,12 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#compute/get_value_and_bind*/
+/*can@2.3.11#compute/get_value_and_bind*/
 define(['can/util/library'], function (can) {
     function ObservedInfo(func, context, compute) {
         this.newObserved = {};
@@ -19,9 +19,14 @@ define(['can/util/library'], function (can) {
         this.childDepths = {};
         this.ignore = 0;
         this.inBatch = false;
+        this.ready = false;
         compute.observedInfo = this;
+        this.setReady = can.proxy(this._setReady, this);
     }
     can.simpleExtend(ObservedInfo.prototype, {
+        _setReady: function () {
+            this.ready = true;
+        },
         getDepth: function () {
             if (this.depth !== null) {
                 return this.depth;
@@ -53,7 +58,7 @@ define(['can/util/library'], function (can) {
             }
         },
         onDependencyChange: function (ev) {
-            if (this.bound) {
+            if (this.bound && this.ready) {
                 if (ev.batchNum !== undefined) {
                     if (ev.batchNum !== this.batchNum) {
                         ObservedInfo.registerUpdate(this);
@@ -65,19 +70,23 @@ define(['can/util/library'], function (can) {
             }
         },
         updateCompute: function (batchNum) {
-            var oldValue = this.value;
-            this.getValueAndBind();
-            this.compute.updater(this.value, oldValue, batchNum);
+            if (this.bound) {
+                var oldValue = this.value;
+                this.getValueAndBind();
+                this.compute.updater(this.value, oldValue, batchNum);
+            }
         },
         getValueAndBind: function () {
             this.bound = true;
             this.oldObserved = this.newObserved || {};
             this.ignore = 0;
             this.newObserved = {};
+            this.ready = false;
             observedInfoStack.push(this);
             this.value = this.func.call(this.context);
             observedInfoStack.pop();
             this.updateBindings();
+            can.batch.afterPreviousEvents(this.setReady);
         },
         updateBindings: function () {
             var newObserved = this.newObserved, oldObserved = this.oldObserved, name, obEv;
@@ -117,9 +126,10 @@ define(['can/util/library'], function (can) {
         objs.push(observeInfo);
     };
     ObservedInfo.batchEnd = function (batchNum) {
+        var cur;
         while (curDepth <= maxDepth) {
-            var cur = updateOrder[curDepth].pop();
-            if (cur) {
+            var last = updateOrder[curDepth];
+            if (last && (cur = last.pop())) {
                 cur.updateCompute(batchNum);
             } else {
                 curDepth++;

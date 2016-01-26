@@ -1,23 +1,23 @@
 /*!
- * CanJS - 2.3.5
+ * CanJS - 2.3.11
  * http://canjs.com/
- * Copyright (c) 2015 Bitovi
- * Thu, 03 Dec 2015 23:34:11 GMT
+ * Copyright (c) 2016 Bitovi
+ * Thu, 21 Jan 2016 23:41:15 GMT
  * Licensed MIT
  */
 
-/*can@2.3.5#util/batch/batch*/
+/*can@2.3.11#util/batch/batch*/
 define(['can/util/can'], function (can) {
-    var batchNum = 1, transactions = 0, dispatchingBatch = null, collectingBatch = null, batches = [];
+    var batchNum = 1, transactions = 0, dispatchingBatch = null, collectingBatch = null, batches = [], dispatchingBatches = false;
     can.batch = {
         start: function (batchStopHandler) {
             transactions++;
             if (transactions === 1) {
                 var batch = {
-                        events: [],
-                        callbacks: [],
-                        number: batchNum++
-                    };
+                    events: [],
+                    callbacks: [],
+                    number: batchNum++
+                };
                 batches.push(batch);
                 if (batchStopHandler) {
                     batch.callbacks.push(batchStopHandler);
@@ -34,7 +34,8 @@ define(['can/util/can'], function (can) {
             if (transactions === 0) {
                 collectingBatch = null;
                 var batch;
-                if (batches.length === 1) {
+                if (dispatchingBatches === false) {
+                    dispatchingBatches = true;
                     while (batch = batches.shift()) {
                         var events = batch.events;
                         var callbacks = batch.callbacks;
@@ -54,6 +55,7 @@ define(['can/util/can'], function (can) {
                         dispatchingBatch = null;
                         can.batch.batchNum = undefined;
                     }
+                    dispatchingBatches = false;
                 }
             }
         },
@@ -71,16 +73,39 @@ define(['can/util/can'], function (can) {
                             args
                         ]
                     ]);
+                } else if (event.batchNum) {
+                    can.dispatch.call(item, event, args);
+                } else if (batches.length) {
+                    can.batch.start();
+                    event.batchNum = collectingBatch.number;
+                    collectingBatch.events.push([
+                        item,
+                        [
+                            event,
+                            args
+                        ]
+                    ]);
+                    can.batch.stop();
                 } else {
-                    if (dispatchingBatch) {
-                        event.batchNum = dispatchingBatch.number;
-                    }
                     can.dispatch.call(item, event, args);
                 }
             }
         },
         afterPreviousEvents: function (handler) {
-            handler({});
+            var batch = can.last(batches);
+            if (batch) {
+                var obj = {};
+                can.bind.call(obj, 'ready', handler);
+                batch.events.push([
+                    obj,
+                    [
+                        { type: 'ready' },
+                        []
+                    ]
+                ]);
+            } else {
+                handler({});
+            }
         },
         after: function (handler) {
             var batch = collectingBatch || dispatchingBatch;
