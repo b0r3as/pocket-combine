@@ -1,4 +1,5 @@
-var path = require('path');
+var path = require('path'),
+    typings = require('typings');
 
 module.exports = function(grunt) {
     var webpack = require('webpack');
@@ -45,6 +46,14 @@ module.exports = function(grunt) {
 
                     return !exists;
                 }
+            }
+        },
+        run: {
+            init: {
+                cmd: 'cordova',
+                args: [
+                    'prepare'
+                ]
             }
         },
         webpack: {
@@ -107,10 +116,24 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-run');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-webpack');
 
+    grunt.registerTask('install-typings', function () {
+        var done = this.async();
+        typings.install({
+            cwd: './src'
+        })
+        .then(function () {
+            done(true);
+        })
+        .catch(function () {
+            done(false);
+        });
+    });
+
+    grunt.registerTask('init', ['install-typings', 'run:init', 'copy:config']);
     grunt.registerTask('build', ['clean:prebuild', 'webpack:build', 'less:build', 'copy:build']);
     grunt.registerTask('build-dev', ['clean:prebuild', 'webpack:build-dev', 'less:build-dev', 'copy:build']);
-    grunt.registerTask('config', ['copy:config']);
 };

@@ -12,9 +12,9 @@ installation on your machine.
 ### Global dependencies ###
 
 Using the Node package manager, you can now install the global dependencies,
-namely Cordova, Grunt CLI and the TypeScript Definition manager.
+namely Cordova and Grunt CLI.
 
-    npm install -g cordova grunt-cli tsd
+    npm install -g cordova grunt-cli
 
 If you are on a Linux machine, you may have to execute the command as root
 using `sudo`.
@@ -27,22 +27,18 @@ The local dependencies can be installed by simply doing
 
 in the project directory (containing the `package.json`)
 
-### TypeScript type definitions ###
+### Initialize project folder ###
 
-The library type definitions used in this project are installed from the
-[DefinitelyTyped][DefinitelyTyped] Github repository via
+The remaining initialization is done via
 
-    tsd install
+    grunt init
 
-[DefinitelyTyped]: http://definitelytyped.org/
+This downloads the library type definitions used in this project via
+[Typings][Typings], installs all necessary Cordova plugins, adds the supported
+platforms and creates a configuration file, where you can enter your app
+credentials before build.
 
-### Cordova project ###
-
-To reconstruct the Cordova project, execute the following:
-
-    cordova prepare
-
-This installs all necessary Cordova plugins and adds the supported platforms.
+[Typings]: https://github.com/typings/typings
 
 ### SWCombine App credentials ###
 
@@ -50,12 +46,8 @@ To build a working app, you'll need to register it with SWCombine. For this,
 you must first have a [player account][swcombine]. Login to SWCombine and
 [register your app][register-app]. You'll receive a set of app credentials.
 
-Create the configuration file via
-
-    grunt config
-
-and enter your app credentials into the file (the officially released APKs
-contain my app credentials).
+Enter your app credentials into the config file created by the init task
+(the officially released APKs contain my app credentials).
 
 The app credentials are obfuscated during the build process and are hard, but
 not impossible, to extract from the APK. You cannot store the app credentials
