@@ -6,9 +6,16 @@
         "allowSyntheticDefaultImports": true,
         "noImplicitAny": true
     },
-    "files": [
-        "./src/app/app.ts",
-        "./src/app/app.d.ts"
+    "exclude": [
+        "node_modules",
+        "platforms",
+        "plugins",
+        "src/cordova-hooks",
+        "src/themes",
+        "src/typings/main",
+        "src/typings/main.d.ts",
+        "src/webpack-loaders",
+        "www"
     ],
     "compileOnSave": false,
     "atom": {

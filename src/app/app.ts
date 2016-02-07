@@ -1,3 +1,5 @@
+/// <reference path='./app.d.ts' />
+
 import {Test} from './main/main';
 import can from 'canjs';
 import cordova from 'cordova';

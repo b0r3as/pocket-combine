@@ -110,12 +110,14 @@ dist/
 
 ### Cordova ###
 # The hooks directory is deprecated
-hooks/**
-platforms/**
-plugins/**
+hooks
+platforms
+plugins
 
 
 ### Project ###
-# This directory will be built from typescript
-src/typings/tsd/**
+src/typings/browser
+src/typings/main
+src/typings/browser.d.ts
+src/typings/main.d.ts
 src/modules/config/registration-info.json

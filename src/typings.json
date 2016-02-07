@@ -1,0 +1,26 @@
+{
+  "ambientDependencies": {
+    "BatteryStatus": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/BatteryStatus.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Camera": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Camera.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Contacts": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Contacts.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Device": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Device.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "DeviceMotion": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/DeviceMotion.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "DeviceOrientation": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/DeviceOrientation.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Dialogs": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Dialogs.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "FileSystem": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/FileSystem.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "FileTransfer": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/FileTransfer.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Globalization": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Globalization.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "InAppBrowser": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/InAppBrowser.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Keyboard": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Keyboard.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Media": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Media.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "MediaCapture": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/MediaCapture.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "NetworkInformation": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/NetworkInformation.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Push": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Push.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Splashscreen": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Splashscreen.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "StatusBar": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/StatusBar.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "Vibration": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/Vibration.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "WebSQL": "github:DefinitelyTyped/DefinitelyTyped/cordova/plugins/WebSQL.d.ts#f29bf726a60674dbf24bab06a26403a3871c3f21",
+    "cordova": "github:DefinitelyTyped/DefinitelyTyped/cordova/cordova.d.ts#ac7f83bdcf1dfd70e70acf7a87cf8e83719dacd6",
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#cf2a968f0edd7d30773f7d23fe3708fa029d5ab7"
+  }
+}
