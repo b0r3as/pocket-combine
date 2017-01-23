@@ -1,31 +1,35 @@
 module.exports = function(context) {
-    var Q = context.requireCordovaModule('q');
-    var deferred = new Q.defer();
-    var spawn = require('child_process').spawn;
+    var childProcess = require('child_process');
     var isRelease = context.opts.options.release;
-    var taskName = isRelease ? 'build' : 'build-dev';
+    var taskName = isRelease ? 'build' : 'build:dev';
 
-    console.info('\n> Running "' + taskName + '" Grunt task\n');
+    console.info('\n> Running "' + taskName + '" Npm task\n');
 
-    var grunt = spawn('grunt', [taskName, '--stack', '--release', isRelease]);
+    var preBuild = childProcess.spawn(
+        'npm',
+        [
+            'run-script',
+            taskName,
+            '--',
+            '--release',
+            isRelease
+        ],
+        {stdio: 'inherit'}
+    );
 
-    grunt.stdout.on('data', function(data) {
-      process.stdout.write(data.toString());
+    return new Promise(function (aResolve, aReject) {
+        preBuild.on('error', function (aError) {
+            aReject(new Error(aError.message));
+        });
+
+        preBuild.on('close', function (aCode, aSignal) {
+            if (aSignal) {
+                aReject(new Error('Npm task "' + taskName + '" was terminated with signal ' + aSignal));
+            } else if (aCode) {
+                aReject(new Error('Npm task "' + taskName + '" exited with code ' + aCode));
+            } else {
+                aResolve();
+            }
+        });
     });
-    grunt.stderr.on('data', function(data) {
-      process.stderr.write(data.toString());
-    });
-
-    grunt.on('error', function (aError) {
-        deferred.reject(new Error(aError.message));
-    });
-    grunt.on('exit', function (aCode) {
-        if (aCode !== 0) {
-            deferred.reject(new Error('Grunt task "' + taskName + '" exited with code ' + aCode));
-        } else {
-            deferred.resolve();
-        }
-    });
-
-    return deferred.promise;
 }

@@ -9,6 +9,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com:b0r3as/pocket-combine.git"
   },
+  "scripts": {
+    "build": "grunt build --stack",
+    "build:dev": "grunt build-dev --stack"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.4.5",
