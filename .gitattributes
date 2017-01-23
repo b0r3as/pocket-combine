@@ -1,3 +1,8 @@
+* text=auto
+
+# Prevent line ending modification in .gitignore because there are special ones inside
+.gitignore -text
+
 # raster graphics
 *.bmp binary -delta
 *.gif binary -delta
